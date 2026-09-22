@@ -1,0 +1,21 @@
+* { box-sizing: border-box; }
+body { margin: 0; background: #f4f6f8; color: #1d2939; font-family: Arial, Helvetica, sans-serif; }
+.cabecalho { padding: 28px 20px; background: #123d71; color: #fff; text-align: center; }
+.cabecalho h1 { margin: 0; font-size: clamp(1.5rem, 4vw, 2rem); }
+.conteudo { max-width: 1200px; margin: 0 auto; padding: 24px 16px 40px; }
+.filtros { display: grid; grid-template-columns: 2fr 1fr 1fr auto auto; gap: 12px; align-items: end; padding: 16px; background: #fff; border-radius: 10px; box-shadow: 0 2px 8px #10182814; }
+.campo-filtro { display: grid; gap: 6px; font-size: .9rem; font-weight: 700; }
+input, select, button, .limpar { min-height: 40px; border-radius: 6px; font: inherit; }
+input, select { width: 100%; padding: 8px 10px; border: 1px solid #98a2b3; background: #fff; }
+button, .limpar { padding: 9px 16px; border: 1px solid #123d71; background: #123d71; color: #fff; cursor: pointer; text-decoration: none; text-align: center; }
+.limpar { border-color: #667085; background: #fff; color: #344054; }
+.resultado { margin: 24px 0 12px; font-weight: 700; }
+.grade-candidatos { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+.card { overflow: hidden; background: #fff; border-radius: 10px; box-shadow: 0 2px 8px #10182814; }
+.foto-candidato { display: block; width: 100%; aspect-ratio: 161 / 225; object-fit: cover; }
+.dados-candidato { padding: 12px; }
+.dados-candidato h2 { margin: 0 0 7px; font-size: 1rem; }
+.numero, .cargo { margin: 4px 0; font-weight: 700; }
+.detalhe { margin: 5px 0; color: #475467; font-size: .86rem; }
+.vazio { padding: 24px; background: #fff; border-radius: 10px; text-align: center; }
+@media (max-width: 800px) { .filtros { grid-template-columns: 1fr 1fr; } .campo-filtro:first-child { grid-column: 1 / -1; } }

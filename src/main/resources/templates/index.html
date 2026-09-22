@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candidatos — Eleições 2026</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header class="cabecalho"><h1>Candidatos — Eleições 2026</h1></header>
+    <main class="conteudo">
+        <form method="get" th:action="@{/}" class="filtros">
+            <label class="campo-filtro">Buscar por nome ou número
+                <input type="text" name="texto" th:value="${textoSelecionado}" placeholder="Ex.: Maria ou 12345">
+            </label>
+            <label class="campo-filtro">Cargo
+                <select name="cargo">
+                    <option value="" th:selected="${cargoSelecionado.isEmpty()}">Todos</option>
+                    <option th:each="opcao : ${cargos}" th:value="${opcao}" th:text="${opcao}" th:selected="${opcao == cargoSelecionado}"></option>
+                </select>
+            </label>
+            <label class="campo-filtro">Partido
+                <select name="partido">
+                    <option value="" th:selected="${partidoSelecionado.isEmpty()}">Todos</option>
+                    <option th:each="opcao : ${partidos}" th:value="${opcao}" th:text="${opcao}" th:selected="${opcao == partidoSelecionado}"></option>
+                </select>
+            </label>
+            <button type="submit">Filtrar</button>
+            <a th:href="@{/}" class="limpar">Limpar</a>
+        </form>
+
+        <p class="resultado" th:text="|${totalCandidatos} candidato(s) encontrado(s)|"></p>
+        <section class="grade-candidatos" th:if="${!candidatos.isEmpty()}">
+            <article class="card" th:each="cand : ${candidatos}">
+                <img th:if="${cand.fotoDisponivel}" th:src="@{'/images/candidatos/' + ${cand.nomeArquivoFoto}}" th:alt="${cand.nomeUrna}" class="foto-candidato">
+                <img th:unless="${cand.fotoDisponivel}" th:src="@{/images/candidatos/sem-foto.jpg}" alt="Sem foto" class="foto-candidato">
+                <div class="dados-candidato">
+                    <h2 th:text="${cand.nomeUrna}">Nome de urna</h2>
+                    <p class="numero" th:text="|Número: ${cand.nrCandidato}|">Número</p>
+                    <p class="cargo" th:text="${cand.cargo}">Cargo</p>
+                    <p class="detalhe" th:text="|Partido: ${cand.siglaPartido}|">Partido</p>
+                    <p class="detalhe" th:if="${cand.situacaoCandidatura != null and !cand.situacaoCandidatura.isBlank() and cand.situacaoCandidatura != '#NE'}" th:text="|Situação: ${cand.situacaoCandidatura}|">Situação</p>
+                    <p class="detalhe" th:if="${cand.idade >= 0}" th:text="|Idade: ${cand.idade} anos|">Idade</p>
+                    <p class="detalhe" th:if="${cand.ocupacao != null and !cand.ocupacao.isBlank() and cand.ocupacao != '#NULO'}" th:text="|Ocupação: ${cand.ocupacao}|">Ocupação</p>
+                    <p class="detalhe" th:if="${cand.grauInstrucao != null and !cand.grauInstrucao.isBlank() and cand.grauInstrucao != '#NULO'}" th:text="|Escolaridade: ${cand.grauInstrucao}|">Escolaridade</p>
+                    <p class="detalhe" th:if="${cand.nomeCandidato != null and !cand.nomeCandidato.isBlank()}" th:text="|Nome civil: ${cand.nomeCandidato}|">Nome civil</p>
+                </div>
+            </article>
+        </section>
+        <p class="vazio" th:if="${candidatos.isEmpty()}">Nenhum candidato encontrado.</p>
+    </main>
+</body>
+</html>
